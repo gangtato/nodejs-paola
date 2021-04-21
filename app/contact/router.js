@@ -10,6 +10,7 @@ const contactController = require('./controller');
 router.post('/contacts', multer({dest: os.tmpdir()}).single('picture'), contactController.store);
 // (4) get route contacts
 router.get('/contacts', contactController.index);
-
-// (5) export router 
+// (5) put route contacts
+router.put('/contacts/:id', multer({dest: os.tmpdir()}).single('picture'), contactController.update);
+// (6) export router 
 module.exports = router;
