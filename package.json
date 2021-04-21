@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "go":"SET DEBUG=paola-server:* & npm start",
     "start": "node ./bin/www"
   },
   "dependencies": {
