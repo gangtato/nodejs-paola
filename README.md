@@ -42,4 +42,13 @@ params:
 
 example:
 - localhost:3000/api/contacts/607fe08b0699e32580e83880
+
+
+### Folder Structure
+- app/ ======> bussiness logic, data model, router
+- bin/ ======> start the project 
+- database/ ======> connection MongoDB to server
+- node_modules/ =====> node library
+- public/ =====> folder static for serve image or file
+- views/ =====> serve little views of backend
        
