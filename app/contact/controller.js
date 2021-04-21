@@ -2,7 +2,7 @@ const Contact = require("./model");
 const config = require('../config');
 const fs = require('fs');
 const path = require('path');
-
+// (1) menambah contact
 async function store(req, res, next){ 
 
 
@@ -75,22 +75,30 @@ async function store(req, res, next){
             next(err);
     }
 }
-
+// (2) membaca contact
 async function index(req, res, next){
     try{
-        let { limit = 10, skip = 0 } = req.query;
-
-        let contacts = 
-        await Contact.find()
-              .limit(parseInt(limit))
-              .skip(parseInt(skip));
-
+        let { limit = 10, skip = 0, q = '', p ='' } = req.query;
+        let criteria = {};
+        if(q.length){
+            // --- gabungkan dengan criteria --- //
+            criteria = {
+            ...criteria, 
+            name: {$regex: `${q}`, $options: 'i'},
+            phoneNumber: {$regex: `${p}`, $options: 'i'}
+            }
+        }
+        let contacts = await Contact
+                        .find(criteria)
+                        .limit(parseInt(limit))
+                        .skip(parseInt(skip));
+        
         return res.json(contacts);
     }catch(err){
         next(err);
-    }
+    } 
 }
-
+// (3) mengupdate contact
 async function update(req, res, next){ 
 
 
@@ -170,9 +178,29 @@ async function update(req, res, next){
             next(err);
     }
 }
+// (4) menghapus contact
+async function destroy(req, res, next){
+    
+    try {
+        let contact = await Contact.findOneAndDelete({_id: req.params.id});
+
+        let currentImage = `${config.rootPath}/public/upload/${contact.picture}`;
+ 
+        if(fs.existsSync(currentImage)){
+           fs.unlinkSync(currentImage)
+        }
+        return res.json(contact);
+
+    } catch(err) {
+
+       next(err);
+    }
+
+}
 
 module.exports = {
     index,
     store,
-    update
+    update,
+    destroy
 }
