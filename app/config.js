@@ -1,3 +1,4 @@
+const path = require("path");
 const dotenv = require("dotenv");
 dotenv.config()
 
@@ -9,4 +10,6 @@ module.exports = {
     dbPort: process.env_DB_PORT,
     dbPass: process.env.DB_PASS, 
     dbName: process.env.DB_NAME,
+    //----- konfigurasi filename -----//
+    rootPath: path.resolve(__dirname, '..'),
 }

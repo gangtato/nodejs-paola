@@ -11,19 +11,19 @@ const contactSchema = Schema({
 
     picture:{
         type: String,
-        default: "Default.png"
+        required:[true, 'picture must be filled']
     },
 
     phoneNumber:{
         type: String,
         minlength: [5, 'Length minimum of phone number is 5'],
-        required: [true, 'name must be filled']
+        required: [true, 'phoneNumber must be filled']
     },
 
     address:{
         type: String,
         minlength: [5, 'Length minimum of address is 5'],
-        required: [true, 'name must be filled']
+        required: [true, 'address must be filled']
     }
 
 
